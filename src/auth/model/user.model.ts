@@ -21,10 +21,10 @@ export class User extends TimeStamps {
   @prop({ required: true, default: true })
   isActive!: boolean;
 
-  @prop({ default: null })
+  @prop({ type: String, default: null })
   refreshTokenHash?: string | null;
 
-  @prop({ default: null })
+  @prop({ type: Date, default: null })
   refreshTokenExpiresAt?: Date | null;
 }
 
