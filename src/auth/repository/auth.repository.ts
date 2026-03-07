@@ -1,17 +1,22 @@
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@m8a/nestjs-typegoose';
-import type {  ReturnModelType } from '@typegoose/typegoose';
+import type { ReturnModelType } from '@typegoose/typegoose';
 import { User } from '../model/user.model';
+import { InjectModel } from '@nestjs/mongoose';
+import type { Model } from 'mongoose';
 
 @Injectable()
 export class AuthRepository {
   constructor(
-    @InjectModel(User)
-    private readonly userModel: ReturnModelType<typeof User>,
+    @InjectModel(User.name)
+    private readonly userModel: Model<User>,
   ) {}
 
-  async createUser(email: string, passwordHash: string): Promise<User> {
-    const user = new this.userModel({ email, passwordHash });
+  async createUser(
+    name: string,
+    email: string,
+    passwordHash: string,
+  ): Promise<User> {
+    const user = new this.userModel({ name, email, passwordHash });
     return user.save();
   }
 

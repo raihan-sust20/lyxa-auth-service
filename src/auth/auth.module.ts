@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { TypegooseModule } from '@m8a/nestjs-typegoose';
 import { JwtModule } from '@nestjs/jwt';
 // import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -7,13 +6,14 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthController } from './controller/auth.controller';
 import { AuthService } from './service/auth.service';
 import { AuthRepository } from './repository/auth.repository';
-import { User } from './model/user.model';
+import { User, UserModel } from './model/user.model';
 // import { UserRegisteredEvent } from './events/user-registered.event';
 import { CommonModule } from '../common/common.module';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
-    TypegooseModule.forFeature([User]),
+    MongooseModule.forFeature([{ name: User.name, schema: UserModel.schema }]),
     JwtModule.register({}),
     // RabbitMQModule.forRootAsync(RabbitMQModule, {
     //   imports: [ConfigModule],

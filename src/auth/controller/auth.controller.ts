@@ -6,6 +6,7 @@ import { LoginDto } from '../dto/login.dto';
 import { ValidateTokenDto, ValidateTokenResponseDto } from '../dto/validate-token.dto';
 import { RefreshTokenDto } from '../dto/refresh-token.dto';
 import { LogoutDto, LogoutResponseDto } from '../dto/logout.dto';
+import { LogGrpc } from '../../common/decorators/log-grpc.decorator';
 
 
 @Controller()
@@ -13,6 +14,7 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @GrpcMethod('AuthService', 'Register')
+  @LogGrpc()
   async register(data: RegisterDto): Promise<AuthResponseDto> {
     return this.authService.register(data);
   }

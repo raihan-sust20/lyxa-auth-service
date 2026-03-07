@@ -29,3 +29,4 @@ export class User extends TimeStamps {
 }
 
 export const UserModel = getModelForClass(User);
+

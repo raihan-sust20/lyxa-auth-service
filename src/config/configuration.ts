@@ -1,7 +1,7 @@
 export default () => ({
   service: {
     port: parseInt(process.env.SERVICE_PORT ?? '3000', 10),
-    grpcPort: parseInt(process.env.GRPC_PORT ?? '5000', 10),
+    grpcPort: parseInt(process.env.GRPC_PORT ?? '50051', 10),
     environment: process.env.ENVIRONMENT ?? 'development',
   },
   mongodb: {

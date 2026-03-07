@@ -34,13 +34,13 @@ message LogoutRequest {
 }
 
 message AuthResponse {
-  string name = 7;
-  string userId = 1;
-  string email = 2;
-  string accessToken = 3;
-  string refreshToken = 4;
-  int64 accessTokenExpiresAt = 5;
-  int64 refreshTokenExpiresAt = 6;
+  string name = 1;
+  string userId = 2;
+  string email = 3;
+  string accessToken = 4;
+  string refreshToken = 5;
+  int32 accessTokenExpiresAt = 6;
+  int32 refreshTokenExpiresAt = 7;
 }
 
 message ValidateTokenResponse {
@@ -52,4 +52,3 @@ message ValidateTokenResponse {
 message LogoutResponse {
   bool success = 1;
 }
-
