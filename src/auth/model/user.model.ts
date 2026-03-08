@@ -12,7 +12,7 @@ export class User extends TimeStamps {
   @prop({ required: true})
   name!: string;
 
-  @prop({ required: true, unique: true, lowercase: true, trim: true })
+  @prop({ required: true, lowercase: true, trim: true })
   email!: string;
 
   @prop({ required: true })

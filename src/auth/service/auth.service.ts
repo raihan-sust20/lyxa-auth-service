@@ -3,7 +3,7 @@ import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { AuthRepository } from '../repository/auth.repository';
-// import { UserRegisteredEvent } from '../events/user-registered.event';
+import { UserRegisteredEvent } from '../events/user-registered.event';
 import { LoggerService } from '../../common/logger/logger.service';
 import {
   DomainException,
@@ -29,7 +29,7 @@ export class AuthService {
     private readonly authRepository: AuthRepository,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
-    // private readonly userRegisteredEvent: UserRegisteredEvent,
+    private readonly userRegisteredEvent: UserRegisteredEvent,
     private readonly logger: LoggerService,
   ) {}
 
@@ -45,17 +45,21 @@ export class AuthService {
     }
 
     const passwordHash = await bcrypt.hash(dto.password, this.SALT_ROUNDS);
-    const user = await this.authRepository.createUser(dto.name, dto.email, passwordHash);
+    const user = await this.authRepository.createUser(
+      dto.name,
+      dto.email,
+      passwordHash,
+    );
 
     const userId = (user as any)._id.toString();
     const { name, email } = user;
     const tokens = await this.generateAndStoreTokens(userId, user.email);
 
-    // await this.userRegisteredEvent.publish({
-    //   userId,
-    //   email: user.email,
-    //   timestamp: new Date().toISOString(),
-    // });
+    await this.userRegisteredEvent.publish({
+      userId,
+      email: user.email,
+      timestamp: new Date().toISOString(),
+    });
 
     this.logger.log(`User registered successfully: ${userId}`, 'AuthService');
 

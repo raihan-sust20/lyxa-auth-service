@@ -5,6 +5,7 @@ import { CommonModule } from './common/common.module';
 import configuration from './config/configuration';
 import type { Connection, ConnectOptions } from 'mongoose';
 import { MongooseModule } from '@nestjs/mongoose';
+import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
 
 @Module({
   imports: [
@@ -23,10 +24,18 @@ import { MongooseModule } from '@nestjs/mongoose';
           uri: config.get<string>('mongodb.uri')!,
           onConnectionCreate: (connection: Connection) => {
             connection.on('connected', () => console.log('MongoDB connected'));
-            connection.on('open', () => console.log('MongoDB connection opened'));
-            connection.on('disconnected', () => console.log('MongoDB disconnected'));
-            connection.on('reconnected', () => console.log('MongoDB reconnected'));
-            connection.on('disconnecting', () => console.log('MongoDB disconnecting'));
+            connection.on('open', () =>
+              console.log('MongoDB connection opened'),
+            );
+            connection.on('disconnected', () =>
+              console.log('MongoDB disconnected'),
+            );
+            connection.on('reconnected', () =>
+              console.log('MongoDB reconnected'),
+            );
+            connection.on('disconnecting', () =>
+              console.log('MongoDB disconnecting'),
+            );
 
             return connection;
           },

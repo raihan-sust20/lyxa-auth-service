@@ -8,7 +8,7 @@ export default () => ({
     uri: process.env.MONGODB_URI ?? 'mongodb://localhost:27017/auth-db',
   },
   rabbitmq: {
-    url: process.env.RABBITMQ_URL ?? 'amqp://localhost:5672',
+    url: process.env.RABBITMQ_URL ?? 'amqp://lyxa_user:lyxa_password@localhost:5672',
     queue: process.env.RABBITMQ_QUEUE ?? 'auth_queue',
   },
   jwt: {
